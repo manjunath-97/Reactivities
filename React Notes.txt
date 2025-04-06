@@ -1,0 +1,19 @@
+activities.map((activity) => (
+  <li key={activity.id}>{activity.title}</li>
+))
+
+activities.map((activity) => {
+  return <li key={activity.id}>{activity.title}</li>;
+});
+
+
+✅ What's Happening?
+In JavaScript, when you use arrow functions:
+
+{} curly braces indicate a function body, and you must use an explicit return statement.
+
+() parentheses around a value indicate an implicit return — the function returns that value directly without needing return.
+----------------------------------------------------------------------------------------------------------------------------
+
+* CORS controls how resources from different origins are shared.
+  --Which servers are allowed to make request on the current server or site.
