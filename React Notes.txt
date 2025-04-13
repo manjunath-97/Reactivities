@@ -17,3 +17,26 @@ In JavaScript, when you use arrow functions:
 
 * CORS controls how resources from different origins are shared.
   --Which servers are allowed to make request on the current server or site.
+  
+----------------------------------------------------------------------------------------------------------------------------
+
+Key Points About [FromBody] in http handler (Post, get, delete):
+1.	Model Binding:
+By default, ASP.NET Core binds complex types (e.g., objects) from the request body. However, [FromBody] explicitly enforces this behavior.
+2.	Serialization:
+The framework uses a serializer (e.g., System.Text.Json or Newtonsoft.Json) to deserialize the request body into the specified parameter type.
+
+3.	When to Use:
+•	For complex objects (e.g., DTOs or domain models) sent in the request body.
+•	When you want to override the default binding behavior.
+
+ [HttpPost]
+ public async Task<IActionResult> CreateActivity([FromBody] Activity activity)
+ {
+     return await Mediator.Send(new CreateActivity.Command { Activity = activity });
+ }
+ 
+ 4. For strings, int paramaeter the system by default searches in the url, or use [FromQuery] or [FromRoute]
+ ---------------------------------------------------------------------------------------------------------------------------
+ 
+   
