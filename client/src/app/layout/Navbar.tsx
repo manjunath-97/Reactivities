@@ -1,7 +1,11 @@
-import { Group, Menu } from "@mui/icons-material";
-import { AppBar, Box, Button, Container, CssBaseline, IconButton, MenuItem, Toolbar, Typography } from "@mui/material";
+import { Group } from "@mui/icons-material";
+import { AppBar, Box, Button, Container, CssBaseline, MenuItem, Toolbar, Typography } from "@mui/material";
 
-export default function NavBar() {
+type Props = {
+    openForm: () => void;
+};
+
+export default function NavBar({openForm } : Props) {
     return (
         <>
         <CssBaseline/>
@@ -31,7 +35,7 @@ export default function NavBar() {
                                     contact
                                 </MenuItem>
                             </Box>
-                            <Button size="large" variant="contained" color="warning">
+                            <Button size="large" variant="contained" color="warning" onClick={ openForm}>
                                 Create activity
                             </Button>
                     </Toolbar>
