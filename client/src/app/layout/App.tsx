@@ -2,7 +2,7 @@ import { Box, Container, CssBaseline, Typography } from "@mui/material";
 import { useState } from "react"
 import NavBar from "./Navbar";
 import ActivityDashboard from "../../features/activities/ActivityDashboard";
-import { useActivities } from "../../lib/hooks/useActivities";
+import { useActivities } from "../../lib/hooks/useActivities.ts";
 
 function App() {
 
@@ -11,7 +11,6 @@ function App() {
 
     const [editMode, setEditMode] = useState<boolean>(false);
 
-    // Queries
     const { activities, isPending } = useActivities();
 
     const handleSelectActivity = (id : string) => {
@@ -37,26 +36,6 @@ function App() {
         setEditMode(false);
     }
 
-    const submitForm = (activity: Activity) => {
-        //if (activity.id) {
-        //    setActivities(activities.map(a => a.id === activity.id ? activity : a));
-        //    setSelectedActivity(activity);
-        //}
-        //else {
-        //    const newActivity = { ...activity, id: activities.length.toString() }
-        //    setActivities([...activities, newActivity]);
-        //    setSelectedActivity(newActivity);
-        //}
-        console.log(activity);
-        setEditMode(false);
-
-    }
-
-    const deleteActivity = (id: string) => {
-        console.log(id);
-    }
-
-
     return (
         <Box sx={{bgcolor:"#eeeeee", minHeight:'10vh'} }>
             <CssBaseline/>
@@ -73,8 +52,6 @@ function App() {
                         editMode={editMode}
                         openForm={HandleOpenForm}
                         closeForm={HandleCloseForm}
-                        submitForm={submitForm}
-                        deleteActivity={deleteActivity}
                     />)
                 }
             </Container>
