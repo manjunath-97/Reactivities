@@ -1,15 +1,19 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { FormEvent } from "react";
 import { useActivities } from "../../../lib/hooks/useActivities";
+import { NavLink } from "react-router";
+import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 
-type Props = {
-    closeForm: () => void;
-    activity: Activity | undefined;
-}
 
-export default function ActivityForm({ closeForm, activity }: Props) {
+export default function ActivityForm() {
 
-    const { updateActivity,createActivity } = useActivities();
+    const { id } = useParams();
+
+    const Navigate = useNavigate();
+
+    const { updateActivity, createActivity, activity, isLoading } = useActivities(id);
+
     const handleSubmit = async (event : FormEvent<HTMLFormElement>) =>
     {
         event.preventDefault();
@@ -23,17 +27,26 @@ export default function ActivityForm({ closeForm, activity }: Props) {
         if (activity) {
             data.id = activity.id;
             await updateActivity.mutateAsync(data as unknown as Activity);
+            Navigate(`/activities/${activity.id}`)
         }
         else {
-            await createActivity.mutateAsync(data as unknown as Activity);
+            createActivity.mutate(data as unknown as Activity, {
+                onSuccess: (id) => {
+                    Navigate(`/activities/${id}`);
+                }
+            });
         }
-        closeForm();
+
+    }
+
+    if (isLoading) {
+        return <Typography>Loading...</Typography>
     }
 
     return (
         <Paper sx={{borderRadius:3, padding:3}}>
             <Typography variant="h5" gutterBottom color="primary">
-                Create a new Activity
+                { activity ? 'Edit Activity' : "Create an Activity"}
             </Typography>
 
             <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={3}>
@@ -46,7 +59,7 @@ export default function ActivityForm({ closeForm, activity }: Props) {
                 <TextField name="city" label="City" defaultValue={activity?.city} />
                 <TextField name="venue" label="venue" defaultValue={activity?.venue} />
                 <Box sx={{ display: "flex", justifyContent: "end", gap: 3 }}>
-                    <Button color="inherit" onClick={closeForm}>Cancel</Button>
+                    <Button color="inherit" component={ NavLink}  to='/activities'>Cancel</Button>
                     <Button color="success"
                         type="submit"
                         variant="contained"
