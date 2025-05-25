@@ -1,9 +1,9 @@
 import { createBrowserRouter} from "react-router";
 import App from "../layout/App";
 import Home from "../../features/home/HomePage";
-import ActivityDashboard from "../../features/activities/ActivityDashboard";
+import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import ActivityForm from "../../features/activities/forms/ActivityForm";
-import ActivityDetails from "../../features/activities/ActivityDetails";
+import ActivityDetailsPage from "../../features/activities/details/ActivityDetailsPage";
 
 export const router = createBrowserRouter([
     {
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "activities/:id",
-                element : <ActivityDetails/>
+                element: <ActivityDetailsPage/>
             },
             {
                 path: "manage/:id",
