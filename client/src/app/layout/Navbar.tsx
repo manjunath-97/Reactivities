@@ -1,10 +1,14 @@
 import { Group } from "@mui/icons-material";
-import { AppBar, Box, Container, CssBaseline, MenuItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Container, CssBaseline, LinearProgress, MenuItem, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router";
 import MenuItemLink from "../../shared/MenuItemLink";
+import useStore from "../../lib/hooks/useStore";
+import { Observer } from "mobx-react-lite";
 
 
 export default function NavBar() {
+    const { uiStore } = useStore();
+
     return (
         <>
         <CssBaseline/>
@@ -30,13 +34,31 @@ export default function NavBar() {
                                 <MenuItemLink to='/createActivity'>
                                     Create an Activity!
                                 </MenuItemLink>
+                                <MenuItemLink to='/counter'>
+                                    Counter
+                                </MenuItemLink>
                             </Box>
                             <MenuItem>
                                 User Menu
                             </MenuItem>
                     </Toolbar>
-                </Container>
-            </AppBar>
+                    </Container>
+
+                    <Observer>
+                        {
+                            () => uiStore.isLoading ? (
+                                <LinearProgress color="secondary" sx={
+                                    {
+                                        position: "absolute",
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        top: 0
+                                    }} />
+                            ):null
+                        }                        
+                    </Observer>
+                </AppBar>
         </Box>
         </>
     )
