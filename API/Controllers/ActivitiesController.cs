@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Activities.Queries;
 using Application.Activities.Commands;
+using Application.Activities.DTOs;
 
 namespace API.Controllers
 {
@@ -24,9 +25,9 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> CreateActivity(Activity activity)
+        public async Task<ActionResult<string>> CreateActivity(CreateActivityDTO activityDto)
         {
-            return await Mediator.Send(new CreateActivty.Command { Activity = activity });
+            return await Mediator.Send(new CreateActivty.Command { ActivityDto = activityDto });
         }
 
         [HttpPut]

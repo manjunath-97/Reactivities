@@ -3,6 +3,8 @@ using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
+using FluentValidation;
+using Application.Activities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,7 @@ builder.Services.AddCors();
 builder.Services.AddMediatR(x => 
     x.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>());
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+builder.Services.AddValidatorsFromAssemblyContaining<ActivityValidator>();
 
 var app = builder.Build();
 
