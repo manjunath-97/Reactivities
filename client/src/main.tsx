@@ -11,6 +11,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router';
 import { router } from './app/router/Routes.tsx';
 import { StoreContext, store } from './lib/stores/store.ts'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 
 const queryClient: QueryClient = new QueryClient();
 
@@ -19,6 +22,7 @@ createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <StoreContext.Provider value={store}>
             <QueryClientProvider client={queryClient}>
+                <ToastContainer position="bottom-right" theme="colored" hideProgressBar />
                 <ReactQueryDevtools />
                 <RouterProvider router={router}></RouterProvider>
             </QueryClientProvider>

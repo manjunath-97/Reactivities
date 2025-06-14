@@ -21,28 +21,26 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(string id)
         {
-            return await Mediator.Send(new GetActivityDetails.Query { Id = id });
-        }
+//            throw new Exception("This is a test exception"); // Simulating an error for testing purposes
+            return HandleResult(await Mediator.Send(new GetActivityDetails.Query { Id = id }));        
+        }   
 
         [HttpPost]
         public async Task<ActionResult<string>> CreateActivity(CreateActivityDTO activityDto)
         {
-            return await Mediator.Send(new CreateActivty.Command { ActivityDto = activityDto });
+            return HandleResult(await Mediator.Send(new CreateActivty.Command { activityDto = activityDto }));
         }
 
         [HttpPut]
-        public async Task<ActionResult> EditActivity(Activity activity)
+        public async Task<ActionResult> EditActivity(EditActivityDto activityDto)
         {
-            await Mediator.Send(new EditActivty.Command { Activity = activity });
-
-            return NoContent();
+            return HandleResult(await Mediator.Send(new EditActivity.Command { activityDto = activityDto }));
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteActivity(string id)
         {
-            await Mediator.Send(new DeleteActivity.Command { Id = id });
-            return Ok();
+            return HandleResult(await Mediator.Send(new DeleteActivity.Command { Id = id }));
         }
     }
 }
