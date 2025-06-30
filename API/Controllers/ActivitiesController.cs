@@ -21,7 +21,6 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(string id)
         {
-//            throw new Exception("This is a test exception"); // Simulating an error for testing purposes
             return HandleResult(await Mediator.Send(new GetActivityDetails.Query { Id = id }));        
         }   
 
