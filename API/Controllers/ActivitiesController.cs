@@ -7,6 +7,7 @@ using Persistence;
 using Application.Activities.Queries;
 using Application.Activities.Commands;
 using Application.Activities.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -18,6 +19,7 @@ namespace API.Controllers
             return await Mediator.Send(new GetActivityList.Query());
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(string id)
         {
