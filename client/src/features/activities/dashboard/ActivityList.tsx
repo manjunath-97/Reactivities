@@ -3,11 +3,14 @@ import ActivityCard from "./ActivityCard";
 import { useActivities } from "../../../lib/hooks/useActivities";
 
 export default function ActivityList() {
-    const { activities, isPending } = useActivities();
+    const { activities, isLoading } = useActivities();
 
-    if (!activities || isPending) 
+    if (isLoading) 
         return <Typography variant="h3"> Loading...</Typography>
-    
+
+    if (!activities)
+        return <Typography variant="h6"> No Activities found! </Typography>
+
     return (
         <Box sx={{display:"flex", flexDirection:"column", gap:3} }>
             {activities.map(activity => (

@@ -11,6 +11,13 @@ type Activity = {
     latitude: number
 }
 
+type User = {
+    id: string
+    email: string
+    displayName: string
+    imageUrl?: string
+}
+
 
 type LocationIQSuggestion = {
     place_id: string

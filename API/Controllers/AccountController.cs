@@ -53,7 +53,9 @@ namespace API.Controllers
             return Ok(new
             {
                 user.DisplayName,
-                user.Email
+                user.Email,
+                user.Id,
+                user.ImageUrl
             });
         }
 

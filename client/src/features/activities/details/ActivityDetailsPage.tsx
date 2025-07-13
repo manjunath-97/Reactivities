@@ -10,10 +10,10 @@ export default function ActivityDetailsPage() {
 
 
     const { id } = useParams();
-    const { activity, isLoading } = useActivities(id);
+    const { activity, isLoadingActivity } = useActivities(id);
 
 
-    if (isLoading)
+    if (isLoadingActivity)
         return <Typography>Loading...</Typography>;
 
     if (!activity)

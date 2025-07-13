@@ -8,52 +8,45 @@ import Counter from "../../features/counter/Counter"
 import TestErrors from "../../features/errors/TestErrors";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
+import LoginForm from "../../features/login/LoginFom";
+import RequireAuth from "../router/RequireAuth";
+import RegisterForm from "../../features/login/RegisterForm";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
-        children: [
-            {
-                path: "",
-                element: <Home/>
+        children:
+        [
+                {
+                element: <RequireAuth />,
+                children: [
+                    {
+                        path: "activities",
+                        element: <ActivityDashboard />
+                    },
+                    {
+                        path: "createActivity",
+                        element: <ActivityForm key='create' />
+                    },
+                    {
+                        path: "activities/:id",
+                        element: <ActivityDetailsPage />
+                    },
+                    {
+                        path: "manage/:id",
+                        element: <ActivityForm />
+                    }
+                ]
             },
-            {
-                path: "activities",
-                element : <ActivityDashboard/>
-            },
-            {
-                path: "createActivity",
-                element : <ActivityForm key='create'/>
-            },
-            {
-                path: "activities/:id",
-                element: <ActivityDetailsPage/>
-            },
-            {
-                path: "manage/:id",
-                element : <ActivityForm/>
-            },
-            {
-                path: "counter",
-                element: <Counter />
-            },
-            {
-                path: "TestErrors",
-                element: <TestErrors />
-            },
-            {
-                path: "not-found",
-                element: <NotFound />
-            },
-            {
-                path: "server-error",
-                element: <ServerError />
-            },
-            {
-                path: "*",
-                element: <Navigate replace to="/not-found"/>
-            }
-        ]
+            { path: "",element: <Home/>},
+            { path: "counter", element: <Counter /> },
+            { path: "TestErrors", element: <TestErrors /> },
+            { path: "not-found", element: <NotFound /> },
+            { path: "server-error", element: <ServerError /> },
+            { path: "*", element: <Navigate replace to="/not-found" /> },
+            { path: "login", element: <LoginForm /> },
+            { path: "register", element: <RegisterForm /> }
+            ]
     }
 ]) 
