@@ -1,5 +1,6 @@
 ﻿using Application.Activities.DTOs;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using FluentValidation;
@@ -20,13 +21,24 @@ public class CreateActivty
 		public required CreateActivityDTO activityDto { get; set; }
 	}
 
-    public class Handler(AppDBContext context, IMapper mapper) : IRequestHandler<Command, Result<string>>
+    public class Handler(AppDBContext context, IMapper mapper, IUserAccessor userAccessor) : IRequestHandler<Command, Result<string>>
     {
         public async Task<Result<string>> Handle(Command request, CancellationToken cancellationToken)
         {
             var activity = mapper.Map<Activity>(request.activityDto);
 
             context.Activities.Add(activity);
+
+            var User = await userAccessor.GetUserAsync();
+
+            ActivityAttendee activityAttendee = new ActivityAttendee()
+            {
+                ActivityId = activity.Id,
+                UserId = User.Id,
+                IsHost = true
+            };
+
+            context.ActivityAttendee.Add(activityAttendee);
 
             var result = await context.SaveChangesAsync(cancellationToken)>0;
 
