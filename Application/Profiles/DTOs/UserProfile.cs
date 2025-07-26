@@ -8,9 +8,9 @@ namespace Application.Profiles.DTOs;
 
 public class UserProfile
 {
-    public required string UserId { get; set; }
+    public required string Id { get; set; }
 
-    public string? DisplayName { get; set; }
+    public required string DisplayName { get; set; }
 
     public string? Bio { get; set; }
 

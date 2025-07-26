@@ -25,5 +25,5 @@ public class ActivityDto
     public double Longitude { get; set; }
     public double Latitude { get; set; }
 
-    public ICollection<ActivityAttendee> Attendees { get; set; } = [];
+    public ICollection<UserProfile> Attendees { get; set; } = [];
 }

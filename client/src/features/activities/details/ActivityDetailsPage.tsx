@@ -22,12 +22,12 @@ export default function ActivityDetailsPage() {
     return (
             <Grid2 container spacing={3}>
                 <Grid2 size={8}>
-                    <ActivityDetailsSideBar />
                     <ActivityDetailsHeader activity={activity} />
                     <ActivityDetailsInfo activity={activity} />
+                    <ActivityDetailsChats />
                 </Grid2>
                 <Grid2 size={4}>
-                    <ActivityDetailsChats />
+                    <ActivityDetailsSideBar activity={activity} />
                 </Grid2>
             </Grid2> 
 
