@@ -8,5 +8,9 @@ public class User : IdentityUser
     public string? Bio { get; set; }
     public string? ImageUrl { get; set; }
 
+    //Nav properties
+
     public ICollection<ActivityAttendee> Attendees { get; set; } = [];
+    public ICollection<Photo> Photos { get; set; } = [];
+
 }

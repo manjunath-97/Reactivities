@@ -11,4 +11,5 @@ public interface IUserAccessor
 {
     public string GetUserID();
     public Task<User> GetUserAsync();
+    public Task<User> GetUserWithPhotosAsync();
 }
