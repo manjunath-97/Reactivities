@@ -1,5 +1,6 @@
 ﻿using Application.Core;
 using Application.Profiles.commands;
+using Application.Profiles.DTOs;
 using Application.Profiles.queries;
 using Domain;
 using MediatR;
@@ -17,22 +18,28 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new AddPhoto.Command { File = file }));
         }
 
-        [HttpGet("{UserId}/photos")]
-        public async Task<ActionResult<List<Photo>>> GetPhotos(string UserId)
+        [HttpGet("{userId}/photos")]
+        public async Task<ActionResult<List<Photo>>> GetPhotos(string userId)
         {
-            return HandleResult(await Mediator.Send(new GetPhotos.Query { UserID = UserId }));
+            return HandleResult(await Mediator.Send(new GetPhotos.Query { UserID = userId }));
         }
 
-        [HttpDelete("{PhotoId}/photos")]
-        public async Task<ActionResult> DeletePhoto(string PhotoId)
+        [HttpDelete("{photoId}/photos")]
+        public async Task<ActionResult> DeletePhoto(string photoId)
         {
-            return HandleResult(await Mediator.Send(new DeletePhoto.Command { PhotoId = PhotoId }));
+            return HandleResult(await Mediator.Send(new DeletePhoto.Command { PhotoId = photoId }));
         }
 
-        [HttpPut("{PhotoId}/setMain")]
-        public async Task<ActionResult> SetMainPhoto(string PhotoId)
+        [HttpPut("{photoId}/setMain")]
+        public async Task<ActionResult> SetMainPhoto(string photoId)
         {
-            return HandleResult(await Mediator.Send(new SetMainPhoto.Command { PhotoId = PhotoId }));
+            return HandleResult(await Mediator.Send(new SetMainPhoto.Command { PhotoId = photoId }));
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserProfile>> GetProfile(string userId)
+        {
+            return HandleResult(await Mediator.Send(new GetProfile.Query { UserID = userId }));
         }
     }
 }
