@@ -15,11 +15,15 @@ export const useActivities = (id?: string) => {
         },
         enabled: !id && location.pathname === '/activities' && !!currentUser,
         select: (data) => {
+
             return data.map(activity => {
+                const host = activity.attendees.find(x => x.id = activity.hostId);
+
                 return {
                     ...activity,
                     isHost: activity.hostId === currentUser?.id,
-                    isGoing: activity.attendees.some(a => a.id === currentUser?.id)
+                    isGoing: activity.attendees.some(a => a.id === currentUser?.id),
+                    hostImageUrl: host?.imageUrl
                 }
             })
         }
@@ -33,10 +37,14 @@ export const useActivities = (id?: string) => {
         },
         enabled: !!id && !!currentUser,
         select: (data) => {
+
+            const host = data.attendees.find(x => x.id = data.hostId);
+
             return {
                 ...data,
                 isHost: data.hostId === currentUser?.id,
-                isGoing: data.attendees.some(a => a.id === currentUser?.id)
+                isGoing: data.attendees.some(a => a.id === currentUser?.id),
+                hostImageUrl: host?.imageUrl
             }
         }
     })
