@@ -26,10 +26,22 @@ export default function ProfileCard({ profile }: Props) {
                     alt={profile.displayName + ' image'}
                 />
                 <CardContent>
-                    <Box display='flex' alignItems='center' gap={1} >
+                    <Box display='flex' flexDirection="column" gap={1} >
                         <Typography variant="h5">
                             {profile.displayName}
                         </Typography>
+                        {profile.bio && (
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    textOverflow:"ellipsis",
+                                    overflow: "hidden",
+                                    whiteSpace:"nowrap"
+                                }}
+                            >
+                                profile.bio 
+                            </Typography>
+                        )}
 
                         {following && <Chip size="small" label='Following'
                             color="secondary" variant="outlined" />}
