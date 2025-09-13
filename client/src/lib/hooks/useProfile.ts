@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
 import { useMemo } from "react";
-import { Photo } from "@mui/icons-material";
 
 export const useProfile = (id?: string) => {
 

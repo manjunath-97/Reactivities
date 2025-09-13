@@ -11,6 +11,9 @@ export default defineConfig({
             key: fs.readFileSync('./certs/key.pem'),
             cert: fs.readFileSync('./certs/cert.pem')
         },
-        port: 3000
+        port: 3000,
+        hmr: {
+            protocol: 'wss',  // explicitly use secure WS
+        }
     }
 })

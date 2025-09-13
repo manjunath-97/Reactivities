@@ -24,5 +24,10 @@ public class MappingProfiles : Profile
             .ForMember(d => d.Id, x => x.MapFrom(s => s.User.Id));
 
         CreateMap<User, UserProfile>();
+
+        CreateMap<Comment, CommentDto>()
+            .ForMember(d => d.UserId, x => x.MapFrom(s => s.User.Id))
+            .ForMember(d => d.DisplayName, x => x.MapFrom(s => s.User.DisplayName))
+            .ForMember(d => d.ImageUrl, x=>x.MapFrom(s => s.User.ImageUrl));
     }
 }

@@ -1,0 +1,144 @@
+Got it 👍 You’re asking about **`useForm`** — this usually comes from the **[React Hook Form](https://react-hook-form.com/)** library, which is one of the most popular form handling libraries in React + TypeScript. Let me break it down for you in detail.
+
+---
+
+## 1. What is `useForm`?
+
+* `useForm` is a custom React hook from `react-hook-form`.
+* It helps you **manage form state** (values, validation, submission) without writing a lot of boilerplate code.
+* It’s very lightweight compared to using only React’s `useState`.
+
+---
+
+## 2. Basic usage
+
+```tsx
+import { useForm } from "react-hook-form";
+
+type FormValues = {
+  username: string;
+  email: string;
+  password: string;
+};
+
+export default function SignupForm() {
+  const {
+    register,      // used to connect inputs to the form
+    handleSubmit,  // function wrapper for onSubmit
+    formState: { errors } // contains validation errors
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    console.log("Form submitted:", data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("username", { required: "Username is required" })} />
+      {errors.username && <p>{errors.username.message}</p>}
+
+      <input {...register("email", { required: "Email is required" })} />
+      {errors.email && <p>{errors.email.message}</p>}
+
+      <input type="password" {...register("password")} />
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+---
+
+## 3. Breaking down the syntax
+
+### `useForm<FormValues>()`
+
+* Takes a **generic type** (optional but recommended in TS) that defines all fields in the form.
+* Returns an object with lots of helpers.
+
+---
+
+### Returned helpers
+
+1. **`register`**
+
+   * Connects an input field to the form.
+   * Example:
+
+     ```tsx
+     <input {...register("username")} />
+     ```
+   * You can also pass validation rules:
+
+     ```tsx
+     register("username", { required: "Username is required" })
+     ```
+
+2. **`handleSubmit`**
+
+   * Wraps your `onSubmit` function.
+   * Handles validation before calling `onSubmit`.
+   * Example:
+
+     ```tsx
+     <form onSubmit={handleSubmit(onSubmit)}></form>
+     ```
+
+3. **`formState`**
+
+   * Contains form status and validation errors.
+   * Example:
+
+     ```tsx
+     formState: { errors, isSubmitting, isDirty, isValid }
+     ```
+
+4. **`reset`, `setValue`, `getValues`**
+
+   * Manually control form data.
+   * Example:
+
+     ```tsx
+     reset(); // clears the form
+     setValue("username", "Nagarjun"); // sets field value
+     ```
+
+---
+
+## 4. Example with validation
+
+```tsx
+<input
+  {...register("email", {
+    required: "Email is required",
+    pattern: {
+      value: /^[^@ ]+@[^@ ]+\.[^@ ]+$/,
+      message: "Invalid email format"
+    }
+  })}
+/>
+{errors.email && <p>{errors.email.message}</p>}
+```
+
+---
+
+## 5. Benefits of `useForm`
+
+* No need to use `useState` for each field.
+* High performance (it doesn’t rerender on every keystroke).
+* Easy integration with TypeScript.
+* Built-in validation rules.
+
+---
+
+✅ In short:
+
+* `useForm` gives you a **controller** for your form.
+* `register` wires up inputs.
+* `handleSubmit` handles validation + submission.
+* `formState` tracks errors and status.
+
+---
+
+👉 Do you want me to show you how to use `useForm` with **Material UI inputs** or just plain HTML inputs?

@@ -1,4 +1,5 @@
 using API.MiddleWares;
+using API.SignalR;
 using Application.Activities.Queries;
 using Application.Activities.validators;
 using Application.Core;
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<AppDBContext>( opt => {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
    });
 
+builder.Services.AddSignalR();
 builder.Services.AddCors();
 builder.Services.AddMediatR(x =>
 {
@@ -68,6 +70,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>(); // api/login
+app.MapHub<CommentHub>("/comments");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

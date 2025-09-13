@@ -1,0 +1,141 @@
+const store = useLocalObservable(() => ({
+  observableField: initialValue,
+  actionMethod() { ... },
+  get computedField() { ... }
+}));
+
+======================================================================================================================================================
+======================================================================================================================================================
+
+useRef() hook:
+---
+
+## 1. What `useRef` is
+
+`useRef` is a **React hook** that gives you a **mutable container object**.
+
+* It survives re-renders (like `useState`).
+* But unlike `useState`, updating it does **not** cause a re-render.
+* It’s typically used to hold:
+
+  * **DOM references** (like `input` elements).
+  * **Mutable values** you want to persist across renders (like a flag, a timer id, previous value).
+
+---
+
+## 2. Syntax
+
+```tsx
+import { useRef } from "react";
+
+const myRef = useRef(initialValue);
+```
+
+* Returns an object:
+
+  ```ts
+  { current: initialValue }
+  ```
+* You can read/write `myRef.current`.
+
+---
+
+## 3. Example 1: Accessing a DOM element
+
+```tsx
+import { useRef } from "react";
+
+export default function FocusInput() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusInput = () => {
+    inputRef.current?.focus(); // access the actual <input> DOM node
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} type="text" />
+      <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
+}
+```
+
+✅ Here `inputRef.current` points to the `<input>` element in the DOM.
+
+---
+
+## 4. Example 2: Persisting values without re-render
+
+```tsx
+import { useEffect, useRef, useState } from "react";
+
+export default function Timer() {
+  const [count, setCount] = useState(0);
+  const intervalRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    intervalRef.current = window.setInterval(() => {
+      setCount(c => c + 1);
+    }, 1000);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  return <p>Count: {count}</p>;
+}
+```
+
+✅ `intervalRef.current` holds the timer ID. Updating it doesn’t trigger re-renders.
+
+---
+
+## 5. Example 3: Avoiding re-initialization
+
+```tsx
+function Component() {
+  const hasRun = useRef(false);
+
+  if (!hasRun.current) {
+    console.log("Runs only once, even if component re-renders");
+    hasRun.current = true;
+  }
+
+  return <div>Hello</div>;
+}
+```
+
+---
+
+## 6. Key differences: `useRef` vs `useState`
+
+| Feature                       | `useRef`                        | `useState`                  |
+| ----------------------------- | ------------------------------- | --------------------------- |
+| Persists across renders?      | ✅ Yes                           | ✅ Yes                       |
+| Triggers re-render on update? | ❌ No                            | ✅ Yes                       |
+| Common use                    | DOM refs, mutable flags, timers | Component state, UI updates |
+
+---
+
+## 7. Common use cases
+
+* Access DOM nodes directly (`ref` on elements).
+* Store interval/timer IDs.
+* Store previous prop/state values.
+* Store flags (`hasMounted`, `alreadyFetched`).
+* Keep WebSocket / SignalR / hub connections (like in your code).
+
+---
+
+👉 Do you want me to also show you **how `useRef` was used in your SignalR hook (`created.current`)** and why it was chosen there?
+
+======================================================================================================================================================
+
+
+What is event.preventDefault()?
+
+It’s a method available on DOM event objects in JavaScript.
+
+It prevents the browser’s default behavior for that event from happening.

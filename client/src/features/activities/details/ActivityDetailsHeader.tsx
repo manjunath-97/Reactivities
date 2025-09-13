@@ -1,6 +1,6 @@
 import { Card, CardMedia, Box, Typography, Button, Chip } from "@mui/material";
 import { Link } from "react-router";
-import formatDate from "../../../lib/util/util";
+import { formatDate } from "../../../lib/util/util";
 import { useActivities } from "../../../lib/hooks/useActivities";
 import StyledButton from "../../../shared/components/StyledButton";
 
