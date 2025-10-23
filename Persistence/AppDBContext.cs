@@ -15,6 +15,9 @@ public class AppDBContext(DbContextOptions dbContextOptions) : IdentityDbContext
 
     public required DbSet<Comment> Comments { get; set; }
 
+    public required DbSet<UserFollowing> UserFollowings { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -30,6 +33,21 @@ public class AppDBContext(DbContextOptions dbContextOptions) : IdentityDbContext
             .HasOne(x => x.Activity)
             .WithMany(x => x.Attendees)
             .HasForeignKey(x => x.ActivityId);
+
+        builder.Entity<UserFollowing>(x =>
+        {
+            x.HasKey(k => new { k.ObserverId, k.TargetId });
+
+            x.HasOne(o =>o.Observer)
+            .WithMany(f => f.Followings)
+            .HasForeignKey(k => k.ObserverId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            x.HasOne(o => o.Target)
+           .WithMany(f => f.Followers)
+           .HasForeignKey(k => k.TargetId)
+           .OnDelete(DeleteBehavior.Cascade);
+        });
 
         var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
             v => v.ToUniversalTime(),

@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
 import { useMemo } from "react";
 
-export const useProfile = (id?: string) => {
+export const useProfile = (id?: string, predicate?: string) => {
 
     const queryClient = useQueryClient();
 
@@ -12,7 +12,7 @@ export const useProfile = (id?: string) => {
             const response = await agent.get<Profile>(`/Profiles/${id}`);
             return response.data;
         },
-        enabled:!!id
+        enabled: !!id && !predicate
     });
 
     const { data: profilePhotos, isLoading: photosLoading } = useQuery({
@@ -21,7 +21,39 @@ export const useProfile = (id?: string) => {
             const response = await agent.get<Photo[]>(`/profiles/${id}/photos`);
             return response.data;
         },
-        enabled: !!id
+        enabled: !!id && !predicate
+    });
+
+    const { data: followings, isLoading: loadingFollowings } = useQuery<Profile[]>({
+        queryKey: ['followings', id, predicate],
+        queryFn: async () => {
+            const response = await agent.get<Profile[]>(`/profiles/${id}/follow-list?predicate=${predicate}`);
+            return response.data;
+        },
+        enabled: !!id && !!predicate
+    });
+
+
+    const updateFollowing = useMutation({
+        mutationFn: async () => {
+            await agent.post(`/profiles/${id}/follow`);
+        },
+
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['followings', id, "followers"] });
+            queryClient.setQueryData(['profile', id], (profile: Profile) => {
+
+                if (!profile || profile.followersCount === undefined)
+                    return profile;
+
+                return {
+                    ...profile,
+                    followersCount: profile.following ? profile.followersCount - 1 : profile.followersCount + 1,
+                    following : !profile.following
+                }
+
+            })
+        }
     });
 
     const uploadPhoto = useMutation(
@@ -114,6 +146,9 @@ export const useProfile = (id?: string) => {
         isCurrentUser,
         uploadPhoto,
         setMainPhoto,
-        deletePhoto
+        deletePhoto,
+        updateFollowing,
+        followings,
+        loadingFollowings
     }
 }

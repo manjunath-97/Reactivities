@@ -41,5 +41,17 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new GetProfile.Query { UserID = userId }));
         }
+
+        [HttpPost("{userId}/follow")]
+        public async Task<ActionResult<UserProfile>> FollowToggle(string userId)
+        {
+            return HandleResult(await Mediator.Send(new FollowToggle.Command { TargetUserId = userId }));
+        }
+
+        [HttpGet("{userId}/follow-list")]
+        public async Task<ActionResult<UserProfile>> GetFollowings(string userId, string predicate)
+        {
+            return HandleResult(await Mediator.Send(new GetFollowings.Query { UserId = userId, Predicate = predicate }));
+        }
     }
 }

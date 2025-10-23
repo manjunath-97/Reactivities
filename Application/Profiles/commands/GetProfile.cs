@@ -23,7 +23,8 @@ namespace Application.Profiles.commands
 
         public class RequestHandler(
             AppDBContext dBContext, 
-            IMapper mapper
+            IMapper mapper,
+            IUserAccessor userAccessor
         ) 
             : IRequestHandler<Query, Result<UserProfile>>
         {
@@ -31,7 +32,8 @@ namespace Application.Profiles.commands
             {
 
                 var profile = await dBContext.Users
-                    .ProjectTo<UserProfile>(mapper.ConfigurationProvider)
+                    .ProjectTo<UserProfile>(mapper.ConfigurationProvider,
+                        new { currentUserId = userAccessor.GetUserID()})
                     .SingleOrDefaultAsync(x => x.Id == request.UserID,cancellationToken);
 
                 return (profile == null) ? Result<UserProfile>.Failure("Profile Not found",400) : Result<UserProfile>.Success(profile);

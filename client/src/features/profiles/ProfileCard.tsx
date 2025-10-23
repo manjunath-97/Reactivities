@@ -7,7 +7,6 @@ type Props = {
 }
 
 export default function ProfileCard({ profile }: Props) {
-    const following = false;
 
     return (
         <Link to={`/profiles/${profile.id}`} style={{ textDecoration: 'none' }}>
@@ -43,14 +42,14 @@ export default function ProfileCard({ profile }: Props) {
                             </Typography>
                         )}
 
-                        {following && <Chip size="small" label='Following'
+                        {profile.following && <Chip size="small" label='Following'
                             color="secondary" variant="outlined" />}
                     </Box>
                     <Divider sx={{mb:2}} />
                     <Box display="flex" alignItems="center"  justifyContent="start">
                         <Person/>
                         <Typography sx={{ml:2}}>
-                            20 followers
+                            {profile.followersCount} followers
                         </Typography>
                     </Box>
                 </CardContent>

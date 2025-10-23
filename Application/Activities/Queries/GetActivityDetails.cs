@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Activities.DTOs;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain;
@@ -22,12 +23,13 @@ public class GetActivityDetails
         public string Id { get; set; }
     }
 
-    public class Handler(AppDBContext context, IMapper autoMapper) : IRequestHandler<Query, Result<ActivityDto>>
+    public class Handler(AppDBContext context, IMapper autoMapper, IUserAccessor userAccessor) : IRequestHandler<Query, Result<ActivityDto>>
     {
         public async Task<Result<ActivityDto>> Handle(Query request, CancellationToken cancellationToken)
         {
             var activity = await context.Activities
-                .ProjectTo<ActivityDto>(autoMapper.ConfigurationProvider)
+                .ProjectTo<ActivityDto>(autoMapper.ConfigurationProvider,
+                    new { currentUserId = userAccessor.GetUserID() })
                 .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken);
 
             if (activity == null)
