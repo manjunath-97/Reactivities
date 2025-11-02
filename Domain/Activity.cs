@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain;
 
+[Index(nameof(Date))]
 public class Activity
 {
     public string? Id { get; set; } = Guid.NewGuid().ToString();

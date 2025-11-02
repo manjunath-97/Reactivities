@@ -1,3 +1,8 @@
+type PagedList<T,TCursor> = {
+   items: T[],
+   nextCursor : TCursor
+}
+
 type Activity = {
     id: string
     title: string
@@ -14,7 +19,7 @@ type Activity = {
     isGoing: boolean
     hostId: string
     hostDisplayName: string
-    hostImageUrl: string
+    hostImageUrl?: string
 }
 
 type ChatComment = {
@@ -79,4 +84,11 @@ type LocationIQAddress = {
     country: string
     country_code: string
     neighbourhood?: string
+}
+
+type UserActivity = {
+    id: string
+    title: string
+    date: Date
+    category: string
 }

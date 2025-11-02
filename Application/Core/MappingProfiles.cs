@@ -39,5 +39,7 @@ public class MappingProfiles : Profile
             .ForMember(d => d.UserId, x => x.MapFrom(s => s.User.Id))
             .ForMember(d => d.DisplayName, x => x.MapFrom(s => s.User.DisplayName))
             .ForMember(d => d.ImageUrl, x=>x.MapFrom(s => s.User.ImageUrl));
+
+        CreateMap<Activity, UserActivityDto>();
     }
 }

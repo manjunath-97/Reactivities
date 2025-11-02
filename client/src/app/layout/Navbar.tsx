@@ -1,5 +1,5 @@
 import { Group } from "@mui/icons-material";
-import { AppBar, Box, Container, CssBaseline, LinearProgress, MenuItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, CircularProgress, Container, CssBaseline, LinearProgress, MenuItem, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router";
 import MenuItemLink from "../../shared/MenuItemLink";
 import useStore from "../../lib/hooks/useStore";
@@ -15,7 +15,7 @@ export default function NavBar() {
         <>
         <CssBaseline/>
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" sx={{
+            <AppBar position="fixed" sx={{
                 backgroundImage: "linear-gradient(135deg, #182a73 0%, #218aae 69%, #20a7ac 89%)"
             }}>
 
@@ -24,9 +24,22 @@ export default function NavBar() {
                             <Box>
                                 <MenuItem sx={{ display: 'flex', gap: 2 }} component={NavLink} to='/'>
                                     <Group fontSize="large" />
-                                    <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                                    <Typography variant="h4" component="div" sx={{ flexGrow: 1,position:"relative" }}>
                                         Reactivities
                                     </Typography>
+                                    <Observer>
+                                        {
+                                            () => uiStore.isLoading ? (
+                                                <CircularProgress size={20} thickness={7} sx={
+                                                    {
+                                                        color:"white",
+                                                        position: "absolute",
+                                                        left: "105%",
+                                                        top: "30%"
+                                                    }} />
+                                            ) : null
+                                        }
+                                    </Observer>
                                 </MenuItem>
                             </Box>
                             <Box sx={{ display: "flex" }}>
@@ -52,21 +65,6 @@ export default function NavBar() {
                              </Box>
                     </Toolbar>
                     </Container>
-
-                    <Observer>
-                        {
-                            () => uiStore.isLoading ? (
-                                <LinearProgress color="secondary" sx={
-                                    {
-                                        position: "absolute",
-                                        bottom: 0,
-                                        left: 0,
-                                        right: 0,
-                                        top: 0
-                                    }} />
-                            ):null
-                        }                        
-                    </Observer>
                 </AppBar>
         </Box>
         </>
