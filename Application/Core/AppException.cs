@@ -14,7 +14,7 @@ namespace Application.Core
 
         public string? Details { get; set; }
 
-        public AppException(string message, string details, int code)
+        public AppException(string message, string? details, int code)
         {
             Message = message;
             Code = code;

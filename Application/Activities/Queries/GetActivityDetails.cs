@@ -20,7 +20,7 @@ public class GetActivityDetails
 {
     public class Query : IRequest<Result<ActivityDto>>
     {
-        public string Id { get; set; }
+        public required string Id { get; set; }
     }
 
     public class Handler(AppDBContext context, IMapper autoMapper, IUserAccessor userAccessor) : IRequestHandler<Query, Result<ActivityDto>>

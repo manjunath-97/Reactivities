@@ -26,14 +26,19 @@ agent.interceptors.request.use(
 
 agent.interceptors.response.use(
     async (response) => {
+        if (import.meta.env.DEV) {
             await sleep(1000);
-            store.uiStore.isIdle();
-            return response;
+        }
+        store.uiStore.isIdle();
+        return response;
         //            return Promise.reject(e)
     },
 
     async (error) => {
-        await sleep(1000);
+        if (import.meta.env.DEV) {
+            await sleep(1000);
+        }
+
         store.uiStore.isIdle();
 
         const { status, data } = error.response;

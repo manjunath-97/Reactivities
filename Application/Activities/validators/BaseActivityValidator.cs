@@ -21,12 +21,9 @@ namespace Application.Activities.validators
             RuleFor(x => selector(x).Date)
                 .GreaterThan(DateTime.UtcNow).WithMessage("Date should be in the future!");
 
-            RuleFor(x => selector(x).City)
-                .NotEmpty().WithMessage("City is needed!");
-
             RuleFor(x => selector(x).Venue)
                 .NotEmpty().WithMessage("Venue is needed!")
-                .MaximumLength(100).WithMessage("Venues should not exceed the lenght of 100;");
+                .MaximumLength(1000).WithMessage("Venues should not exceed the lenght of 1000;");
 
             RuleFor(x => selector(x).Latitude)
                 .NotEmpty().WithMessage("Latitude is needed!")

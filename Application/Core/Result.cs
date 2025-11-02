@@ -16,7 +16,7 @@ namespace Application.Core
 
         public int Code { get; set; }
 
-        public static Result<T> Success(T value)
+        public static Result<T> Success(T? value)
         {
             return new Result<T> { IsSuccess = true, Value = value };
         }

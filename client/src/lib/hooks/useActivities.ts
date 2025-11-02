@@ -27,7 +27,6 @@ export const useActivities = (id?: string) => {
             return response.data;
 
             },
-        staleTime: 1000 * 60 * 5,
         initialPageParam: null,
         getNextPageParam: (lastPage) => lastPage.nextCursor,
         placeholderData: keepPreviousData,
@@ -72,7 +71,7 @@ export const useActivities = (id?: string) => {
 
     const updateActivity = useMutation({
         mutationFn: async (activity: Activity) => {
-            await agent.put("/Activities", activity);
+            await agent.put(`/Activities/${id}`, activity);
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries(

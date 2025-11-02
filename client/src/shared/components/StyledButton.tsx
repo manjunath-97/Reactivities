@@ -1,7 +1,10 @@
-import { Button, styled } from "@mui/material";
+import { Button, ButtonProps, styled } from "@mui/material";
+import { LinkProps } from "react-router";
 
-const StyledButton = styled(Button)(({ theme }) => ({
-    '&.Mui-disabled' : {
+type StyledButtonProps = ButtonProps & Partial<LinkProps>
+
+const StyledButton = styled(Button)<StyledButtonProps>(({ theme }) => ({
+    '&.Mui-disabled': {
         backgroundColor: theme.palette.grey[600],
         color: theme.palette.text.disabled
     }

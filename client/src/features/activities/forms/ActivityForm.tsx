@@ -1,7 +1,6 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useActivities } from "../../../lib/hooks/useActivities";
-import { NavLink } from "react-router";
 import { useParams, useNavigate } from "react-router";
 import { useForm, FieldValues } from "react-hook-form";
 import { ActivitySchema, activitySchema } from "../../../lib/schemas/activitySchema";
@@ -100,7 +99,7 @@ export default function ActivityForm() {
                 <LocationInput control={control} label='Enter the location' name="location" />
                 
                 <Box sx={{ display: "flex", justifyContent: "end", gap: 3 }}>
-                    <Button color="inherit" component={ NavLink}  to='/activities'>Cancel</Button>
+                    <Button color="inherit" onClick={()=>navigate(-1)}>Cancel</Button>
                     <Button color="success"
                         type="submit"
                         variant="contained"

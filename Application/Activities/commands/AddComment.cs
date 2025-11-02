@@ -40,7 +40,7 @@ public class AddComment
             var comment = new Comment
             {
                 UserId = user.Id,
-                ActivityId = activity.Id,
+                ActivityId = activity.Id!,
                 Body = request.Body
             };
 

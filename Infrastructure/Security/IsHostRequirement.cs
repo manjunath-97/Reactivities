@@ -30,9 +30,9 @@ public class IsHostRequirementHandler(AppDBContext dBContext, IHttpContextAccess
         var httpCntxt = httpContextAccessor.HttpContext;
         if (httpCntxt?.GetRouteValue("id") is not string activityId) return;
 
-        var Attendee = dBContext.ActivityAttendee
+        var Attendee = await dBContext.ActivityAttendee
             .AsNoTracking()
-            .SingleOrDefault(r => r.UserId == userid && r.ActivityId == activityId);
+            .SingleOrDefaultAsync(r => r.UserId == userid && r.ActivityId == activityId);
 
         if (Attendee==null ) return;
 

@@ -1,5 +1,5 @@
 import { Group } from "@mui/icons-material";
-import { AppBar, Box, CircularProgress, Container, CssBaseline, LinearProgress, MenuItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, CircularProgress, Container, CssBaseline, MenuItem, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router";
 import MenuItemLink from "../../shared/MenuItemLink";
 import useStore from "../../lib/hooks/useStore";

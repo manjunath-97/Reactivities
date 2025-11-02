@@ -1,19 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
-import fs from 'fs';
-
+import mkcert from 'vite-plugin-mkcert';
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [react()],
+    build: {
+        outDir: '../API/wwwroot',
+        chunkSizeWarningLimit: 1500,
+        emptyOutDir: true
+    },
     server: {
-        https: {
-            key: fs.readFileSync('./certs/key.pem'),
-            cert: fs.readFileSync('./certs/cert.pem')
-        },
-        port: 3000,
-        hmr: {
-            protocol: 'wss',  // explicitly use secure WS
-        }
-    }
+        port: 3000
+    },
+    plugins: [react(), mkcert()],
 })

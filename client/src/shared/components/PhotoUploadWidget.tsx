@@ -1,5 +1,5 @@
 import { Box, Button, Grid2, Typography } from '@mui/material';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import CloudUpload from '@mui/icons-material/CloudUpload';
 import Cropper, { ReactCropperElement } from "react-cropper";
